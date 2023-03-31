@@ -26,6 +26,7 @@ function playgame(){
         tabl.appendChild(row);
     }
     document.getElementById('play').innerHTML = 'PLAY AGAIN!';
+    document.getElementById('msgs').innerHTML = '';
 }
 
     // Game
