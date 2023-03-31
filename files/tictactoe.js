@@ -323,14 +323,10 @@ function game(id){
 
 // Fill any empty cell left with dash
 function endgame(){
-    for (let i = 1; i < 4; i++){
-        for (let j = 1; j < 4; j++){
-            cell = document.getElementById(i+''+j);
-            if (cell.innerHTML == ''){
-                let dash = document.createElement('h1');
-                dash.innerHTML = '-';
-                cell.appendChild(dash);
-            }
-        }
-    }
+    $(".gamecell").each(function(){
+        if (!$(this).html){
+            $(this).html("<h1>-</h1>");
+        };
+    };
+    );
 }
