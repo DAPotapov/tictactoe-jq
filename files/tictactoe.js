@@ -77,7 +77,7 @@ function game(id){
         }
         else {
             // If center cell is not occupied then place O there
-            var o = document.createElement('h1');
+//             var o = document.createElement('h1');
 //             var o = $("<h1>O</h1>");
 //             $('h1:contains("O")').css('color', 'var(--bs-red)');
 //             o.innerHTML = 'O';
@@ -100,6 +100,7 @@ function game(id){
                 for (let i = 0; i < matrix.length; i++){
                     matrix[i] = new Array(3);
                 }
+                // Fill matrix with -1
                 for (let i = 0; i < 3; i++){
                     for (let j = 0; j < 3; j++){
                         matrix[i][j] = -1;
@@ -112,9 +113,9 @@ function game(id){
                     for (let j = 0; j < 3; j++){
 //                         cell = document.getElementById((i+1) + ''+ (j+1));
 
-                        // If current cell empty check other in row and in column
+                        // If current cell empty, check other in row and in column
 //                         if (cell.innerHTML == ''){
-                        if (!$("#" + i + '' + j).html()){
+                        if (!$("#" + (i + 1) + '' + (j + 1)).html()){
                             matrix[i][j] = 0; // Change weight to 0
                             freespots++; // Game will end when there are no more empty spots left
                             xcount = 0;
@@ -125,17 +126,17 @@ function game(id){
                                 if (k - 1 != i){
 //                                     let cell2 = document.getElementById(k + ''+ (j+1));
 //                                     if (/X/.test(cell2.innerHTML)){
-                                    if (/X/.test($("#" + k + "" + j))){
+                                    if (/X/.test($("#" + k + "" + (j + 1)).html())){
                                         xcount++;
                                     }
 //                                     else if (/O/.test(cell2.innerHTML)){
-                                    else if (/O/.test($("#" + k + "" + j))){
+                                    else if (/O/.test($("#" + k + "" + (j + 1)).html())){
                                         ocount++;
                                     }
                                 }
                             }
                             // Add weight if there are two X already and AI can prevent win of X.
-                            // It should has more weight then cell in intersection of X and O
+                            // It should has more weight than cell in intersection of X and O
                             if (xcount == 2){
                                 xcount++;
                                 xcount++;
@@ -157,11 +158,11 @@ function game(id){
                                 if (k - 1 != j){
 //                                     let cell2 = document.getElementById((i + 1) + ''+ k);
 //                                     if (/X/.test(cell2.innerHTML)){
-                                    if (/X/.test($("#" + i + "" + k))){
+                                    if (/X/.test($("#" + (i + 1) + "" + k).html())){
                                         xcount++;
                                     }
 //                                     else if (/O/.test(cell2.innerHTML)){
-                                    else if (/O/.test($("#" + i + "" + k))){
+                                    else if (/O/.test($("#" + (i + 1) + "" + k).html())){
                                         ocount++;
                                     }
                                 }
@@ -189,11 +190,11 @@ function game(id){
                                     if (k - 1 != i && k - 1 != j){
 //                                         let cell2 = document.getElementById(k + '' + k);
 //                                         if (/X/.test(cell2.innerHTML)){
-                                        if (/X/.test($("#" + k + "" + k))){
+                                        if (/X/.test($("#" + k + "" + k).html())){
                                             xcount++;
                                         }
 //                                         else if (/O/.test(cell2.innerHTML)){
-                                        else if (/O/.test($("#" + k + "" + k))){
+                                        else if (/O/.test($("#" + k + "" + k).html())){
                                             ocount++;
                                         }
                                     }
@@ -221,11 +222,11 @@ function game(id){
                                     if (k != i && 2 - k != j){
 //                                         let cell2 = document.getElementById((k + 1) + '' + (3 - k));
 //                                         if (/X/.test(cell2.innerHTML)){
-                                        if (/X/.test($("#" + (k + 1) + "" + (3 - k)))){
+                                        if (/X/.test($("#" + (k + 1) + "" + (3 - k)).html())){
                                             xcount++;
                                         }
 //                                         else if (/O/.test(cell2.innerHTML)){
-                                        else if (/O/.test($("#" + (k + 1) + "" + (3 - k)))){
+                                        else if (/O/.test($("#" + (k + 1) + "" + (3 - k)).html())){
                                             ocount++;
                                         }
                                     }
@@ -251,9 +252,9 @@ function game(id){
             // Store all maximums to choose randomly - it weakens AI, but makes game more unpredictable
             // Actually if AI place 1st O in a corner it leads to draw: X could not win. Thats makes game very boring.
                 var max = 0; // Should not set to -1, because there are -1 in matrix
-                let k = [];
-                let l = [];
-                let m = -1;
+                let k = []; // array to store row index
+                let l = []; // array to store column index
+                let m = -1; // var to store index for arrays (and counter of maximums)
                 for (let i = 0; i < 3; i++){
                     for (let j = 0; j < 3; j++){
                         if (max < matrix[i][j]){
@@ -279,8 +280,9 @@ function game(id){
                 else if (m == 0)// If only one maximum, thus place O in that cell
                 {
 //                     document.getElementById((k[0] + 1) + '' + (l[0]+1)).appendChild(o);
-                    $("#" + (k[0] + 1) + '' + (l[0]+1)).html("<h1>O</h1>");
+                    $("#" + (k[0] + 1) + "" + (l[0]+1)).html("<h1>O</h1>");
                 }
+                // Color computer's Os
                 $('h1:contains("O")').css('color', 'var(--bs-red)');
 
                 // Check if O wins
@@ -342,7 +344,8 @@ function game(id){
         $('#' + id).css('backgroundColor', 'var(--bs-warning)');
 //         document.getElementById('msgs').innerHTML = 'Cell is occupied, choose another';
         $("#msgs").html("Cell is occupied, choose another");
-        setTimeout(function () {cell.style.backgroundColor = ''; document.getElementById('msgs').innerHTML = '' }, 1400);
+//         setTimeout(function () {cell.style.backgroundColor = ''; document.getElementById('msgs').innerHTML = '' }, 1400);
+        setTimeout(function () {$('#' + id).css('backgroundColor', ''); $("#msgs").html("") }, 1400);
     }
 }
 
