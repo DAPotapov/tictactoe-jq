@@ -2,31 +2,21 @@
 
 function playgame(){
     // Cleaning
-    var field = document.getElementById('field');
-    while (field.lastChild)
-    {
-        field.removeChild(field.lastChild);
-    }
+    $("#field").children().remove()
 
     // Making playfield
-    var id;
     var n = 3;
-    const tabl = document.getElementById('field');
-    for (i = 0; i < n; i++){
-        let row = document.createElement('tr');
-        for (j = 0; j < n; j++){
-            let col = document.createElement('td');
-            id = (i + 1) + '' + (j + 1);
-            col.setAttribute('id', id);
-            col.setAttribute('onclick', 'game(id)');
-            col.setAttribute('class', 'gamecell');
-            row.appendChild(col);
+    for (i = 1; i <= n; i++){
+        $("<tr id='" + i + "'></td>").appendTo("#field");
+        for (j = 1; j <= n; j++){
+            var id = i + '' + j;
+            $("<td id='" + id + "'></td>").appendTo("#" + i);
+            $('#'+id).attr({
+                onclick: "game(id)",
+                class: "gamecell"
+                });
         }
-        row.setAttribute('id', i + 1);
-        tabl.appendChild(row);
     }
-    document.getElementById('play').innerHTML = 'PLAY AGAIN!';
-    document.getElementById('msgs').innerHTML = '';
 }
 
     // Game
@@ -323,10 +313,9 @@ function game(id){
 
 // Fill any empty cell left with dash
 function endgame(){
-    $(".gamecell").each(function(){
-        if (!$(this).html){
-            $(this).html("<h1>-</h1>");
+    $( ".gamecell" ).each(function(){
+        if (!$( this ).html()){
+            $( this ).html("<h1>-</h1>");
         };
-    };
-    );
+    })
 }
