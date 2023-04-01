@@ -21,16 +21,9 @@ function playgame(){
 
     // Game
 function game(id){
-//     var cell = document.getElementById(id);
-    var cell = $('#' + id);
-    var x = document.createElement('h1');
-//     if (cell.innerHTML == ''){
     if (!$('#' + id).html()){
         $('<h1>X</h1>').appendTo('#' + id);
         $('h1:contains("X")').css('color', 'var(--bs-blue)');
-//         x.innerHTML = "X";
-//         x.style.color = 'var(--bs-blue)';
-//         cell.appendChild(x);
 
         // Check if X won.  if not - continue
         var xwin = false;
@@ -39,11 +32,9 @@ function game(id){
             let xcount = 0;
             let xcount2 = 0;
             for (let j = 1; j < 4; j++){
-//                 if  (/X/.test(document.getElementById(i+''+j).innerHTML)){
                 if (/X/.test($("#" + i + '' + j).html())){
                     xcount++;
                 }
-//                 if (/X/.test(document.getElementById(j+''+i).innerHTML)){
                 if (/X/.test($("#" + j + '' + i).html())){
                     xcount2++;
                 }
@@ -58,7 +49,6 @@ function game(id){
         let xcount = 0;
         let xcount2 = 0;
         for (let i = 1; i < 4; i++){
-//             if (/X/.test(document.getElementById(i+''+i).innerHTML)){
             if (/X/.test($("#" + i + '' + i).html())){
                 xcount++;
             }
@@ -71,21 +61,11 @@ function game(id){
         }
 
         if (xwin == true){
-//             document.getElementById('msgs').innerHTML = 'GAME OVER! X wins!';
             $("#msgs").html("GAME OVER! X wins!");
             endgame();
         }
         else {
             // If center cell is not occupied then place O there
-//             var o = document.createElement('h1');
-//             var o = $("<h1>O</h1>");
-//             $('h1:contains("O")').css('color', 'var(--bs-red)');
-//             o.innerHTML = 'O';
-//             o.firstChild.style.color = 'var(--bs-red)';
-//             console.log($o.html());
-
-//             cell = document.getElementById('22');
-
             if (!$("#22").html()){
                 $("#22").append("<h1>O</h1>");
                 $('h1:contains("O")').css('color', 'var(--bs-red)');
@@ -111,10 +91,7 @@ function game(id){
                 let ocount = 0;
                 for (let i = 0; i < 3; i++){
                     for (let j = 0; j < 3; j++){
-//                         cell = document.getElementById((i+1) + ''+ (j+1));
-
                         // If current cell empty, check other in row and in column
-//                         if (cell.innerHTML == ''){
                         if (!$("#" + (i + 1) + '' + (j + 1)).html()){
                             matrix[i][j] = 0; // Change weight to 0
                             freespots++; // Game will end when there are no more empty spots left
@@ -125,11 +102,9 @@ function game(id){
                                 // Only other skipping current
                                 if (k - 1 != i){
 //                                     let cell2 = document.getElementById(k + ''+ (j+1));
-//                                     if (/X/.test(cell2.innerHTML)){
                                     if (/X/.test($("#" + k + "" + (j + 1)).html())){
                                         xcount++;
                                     }
-//                                     else if (/O/.test(cell2.innerHTML)){
                                     else if (/O/.test($("#" + k + "" + (j + 1)).html())){
                                         ocount++;
                                     }
@@ -156,12 +131,9 @@ function game(id){
                             for (let k = 1; k < 4; k++){
                                 // Only other skipping current
                                 if (k - 1 != j){
-//                                     let cell2 = document.getElementById((i + 1) + ''+ k);
-//                                     if (/X/.test(cell2.innerHTML)){
                                     if (/X/.test($("#" + (i + 1) + "" + k).html())){
                                         xcount++;
                                     }
-//                                     else if (/O/.test(cell2.innerHTML)){
                                     else if (/O/.test($("#" + (i + 1) + "" + k).html())){
                                         ocount++;
                                     }
@@ -188,12 +160,9 @@ function game(id){
                                 for (let k = 1; k < 4; k++){
                                     // skip current cell
                                     if (k - 1 != i && k - 1 != j){
-//                                         let cell2 = document.getElementById(k + '' + k);
-//                                         if (/X/.test(cell2.innerHTML)){
                                         if (/X/.test($("#" + k + "" + k).html())){
                                             xcount++;
                                         }
-//                                         else if (/O/.test(cell2.innerHTML)){
                                         else if (/O/.test($("#" + k + "" + k).html())){
                                             ocount++;
                                         }
@@ -216,16 +185,12 @@ function game(id){
                             // Check for secondary diagonal
                             xcount = 0;
                             ocount = 0;
-// TODO разобраться с местной магией
                             if (Math.abs(i - j) == 2){
                                 for (let k = 0; k < 3; k++){
                                     if (k != i && 2 - k != j){
-//                                         let cell2 = document.getElementById((k + 1) + '' + (3 - k));
-//                                         if (/X/.test(cell2.innerHTML)){
                                         if (/X/.test($("#" + (k + 1) + "" + (3 - k)).html())){
                                             xcount++;
                                         }
-//                                         else if (/O/.test(cell2.innerHTML)){
                                         else if (/O/.test($("#" + (k + 1) + "" + (3 - k)).html())){
                                             ocount++;
                                         }
@@ -274,12 +239,10 @@ function game(id){
                 // Write O to random cell with maximum weight - It's needed on early rounds of game where is uncertanty
                 if (m > 0){
                     let p = Math.floor(Math.random() * (m + 1));
-//                     document.getElementById((k[p] + 1) + '' + (l[p]+1)).appendChild(o);
                     $("#" + (k[p] + 1) + "" + (l[p]+1)).html("<h1>O</h1>");
                 }
                 else if (m == 0)// If only one maximum, thus place O in that cell
                 {
-//                     document.getElementById((k[0] + 1) + '' + (l[0]+1)).appendChild(o);
                     $("#" + (k[0] + 1) + "" + (l[0]+1)).html("<h1>O</h1>");
                 }
                 // Color computer's Os
@@ -292,11 +255,9 @@ function game(id){
                     let ocount = 0;
                     let ocount2 = 0;
                     for (let j = 1; j < 4; j++){
-//                         if  (/O/.test(document.getElementById(i+''+j).innerHTML)){
                         if (/O/.test($("#" + i + "" + j).html())){
                             ocount++;
                         }
-//                         if (/O/.test(document.getElementById(j+''+i).innerHTML)){
                         if (/O/.test($("#" + j + "" + i).html())){
                             ocount2++;
                         }
@@ -311,11 +272,9 @@ function game(id){
                 ocount = 0;
                 let ocount2 = 0;
                 for (let i = 1; i < 4; i++){
-//                     if (/O/.test(document.getElementById(i+''+i).innerHTML)){
                     if (/O/.test($("#" + i + "" + i).html())){
                         ocount++;
                     }
-//                     if (/O/.test(document.getElementById(i+''+(4-i)).innerHTML)){
                     if (/O/.test($("#" + i + "" + (4 - i)).html())){
                         ocount2++;
                     }
@@ -324,7 +283,6 @@ function game(id){
                     owin = true;
                 }
                 if (owin == true){
-//                     document.getElementById('msgs').innerHTML = 'GAME OVER! O wins!';
                     $("#msgs").html("GAME OVER! O wins!");
                     // Call funcion to fill left cell
                     endgame();
@@ -332,7 +290,6 @@ function game(id){
 
                 // When there are no more empty cell inform user
                 if (freespots == 0 && !owin && !xwin){
-//                     document.getElementById('msgs').innerHTML = "GAME OVER! IT'S A DRAW!";
                     $("#msgs").html("GAME OVER! IT'S A DRAW!");
                 }
             }
@@ -340,11 +297,8 @@ function game(id){
     }
     // If cell occupied then inform user to make other choice
     else {
-//         cell.style.backgroundColor = 'var(--bs-warning)';
         $('#' + id).css('backgroundColor', 'var(--bs-warning)');
-//         document.getElementById('msgs').innerHTML = 'Cell is occupied, choose another';
         $("#msgs").html("Cell is occupied, choose another");
-//         setTimeout(function () {cell.style.backgroundColor = ''; document.getElementById('msgs').innerHTML = '' }, 1400);
         setTimeout(function () {$('#' + id).css('backgroundColor', ''); $("#msgs").html("") }, 1400);
     }
 }
